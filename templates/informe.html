@@ -1,0 +1,112 @@
+{% extends "base.html" %}
+
+{% block titulo %}Informe de Incidencias{% endblock %}
+
+{% block contenido %}
+
+<h2>Filtros</h2>
+<div class="filtros">
+  <form method="get" action="/informe">
+
+    <label>
+      Estado:
+      <select name="estado">
+        <option value="" {% if not estado %}selected{% endif %}>(Todos)</option>
+        <option value="abierta" {% if estado=="abierta" %}selected{% endif %}>Abierta</option>
+        <option value="resuelta" {% if estado=="resuelta" %}selected{% endif %}>Resuelta</option>
+      </select>
+    </label>
+
+    <label>
+      Categoría:
+      <select name="categoria">
+        <option value="" {% if not categoria %}selected{% endif %}>(Todas)</option>
+        <option value="hardware" {% if categoria=="hardware" %}selected{% endif %}>Hardware</option>
+        <option value="software" {% if categoria=="software" %}selected{% endif %}>Software</option>
+        <option value="red" {% if categoria=="red" %}selected{% endif %}>Red</option>
+        <option value="seguridad" {% if categoria=="seguridad" %}selected{% endif %}>Seguridad</option>
+      </select>
+    </label>
+
+    <label>
+      Gravedad mínima:
+      <input type="number" name="min_gravedad" min="1" max="5" value="{{ gravedad }}" />
+    </label>
+
+    <button type="submit">Aplicar filtros</button>
+  </form>
+</div>
+
+<h2>Resumen</h2>
+<ul>
+  <li>Total de incidencias: {{ resumen.total }}</li>
+  <li>Incidencias resueltas: {{ resumen.resueltas }}</li>
+  <li>Porcentaje resueltas: {{ resumen.porcentaje_resueltas }} %</li>
+</ul>
+
+<h2>Detalle de Incidencias</h2>
+<table>
+  <thead>
+    <tr>
+      <th>ID</th>
+      <th>Titulo</th>
+      <th>Estado</th>
+      <th>Categoría</th>
+      <th>Gravedad</th>
+    </tr>
+  </thead>
+  <tbody>
+    {% for tarea in tareas %}
+    <tr>
+      <td>{{ tarea.id }}</td>
+      <td>{{ tarea.titulo }}</td>
+      <td>{{ tarea.estado }}</td>
+      <td>{{ tarea.categoria }}</td>
+      <td>{{ tarea.gravedad }}</td>
+    </tr>
+    {% endfor %}
+    {% if tareas|length == 0 %}
+    <tr>
+      <td colspan="5">No hay incidencias que cumplan los filtros.</td>
+    </tr>
+    {% endif %}
+  </tbody>
+</table>
+
+<h2>Gráfico: incidencias por categoría</h2>
+<canvas id="grafico" width="800" height="300"></canvas>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script>
+  const labels = {{ labels | tojson }};
+  const values = {{ values | tojson }};
+
+  const ctx = document.getElementById("grafico").getContext("2d");
+  new Chart(ctx, {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [
+        {
+          label: "Número de incidencias",
+          data: values,
+          backgroundColor: 'rgba(54, 162, 235, 0.5)', // Un color azulito para que quede bien
+          borderColor: 'rgba(54, 162, 235, 1)',
+          borderWidth: 1
+        },
+      ],
+    },
+    options: {
+      scales: {
+        y: {
+          beginAtZero: true,
+          ticks: {
+            stepSize: 1 // Para que no salgan decimales (0.5 incidencias)
+          }
+        }
+      }
+    }
+  });
+</script>
+
+{% endblock %}
