@@ -84,7 +84,12 @@ Se modificó la plantilla original para adaptarla al contexto de "Incidencias":
 ## Capturas de pantalla
 
 Captura con el filtro aplicado:
-<img width="1828" height="624" alt="image" src="https://github.com/user-attachments/assets/c6f228ca-55c9-4a1f-a5f0-f70c0c0390c5" />
+<img width="1817" height="699" alt="image" src="https://github.com/user-attachments/assets/a40d2a05-22eb-471d-a301-6f5455d80539" />
+<img width="1810" height="769" alt="image" src="https://github.com/user-attachments/assets/b2af93d1-305a-4873-b361-3357eb73f017" />
 
-<img width="1824" height="830" alt="image" src="https://github.com/user-attachments/assets/22d1f685-23ee-46a6-8291-eec5b988ff00" />
+
+<img width="1821" height="592" alt="image" src="https://github.com/user-attachments/assets/85555985-ddbc-443a-b7f2-44fad35565e7" />
+<img width="1815" height="833" alt="image" src="https://github.com/user-attachments/assets/135e3e04-e359-4b90-862c-a123fde14359" />
+
+
 
